@@ -1,30 +1,49 @@
-from database import db, BaseModel, Client, BoardGame, Rent, RentBoardGame
-from model.client import ClientData
+from database.database import db, Client, BoardGame, Rent, RentBoardGame
+from .models.client import ClientData
+from peewee import DoesNotExist
+from typing import List, Optional
 
-db.connect()
+def init_db():
+    if(db.is_closed()):
+        db.connect()
 
-db.create_tables([BaseModel,Client, BoardGame, Rent, RentBoardGame])
+    db.create_tables([Client, BoardGame, Rent, RentBoardGame])
 
-def createClient(newClient):  
-    Client.create(name = newClient.name, email = newClient.email)
-    pass
+def createClient(newClient: ClientData) -> Client:  
+    return Client.create(
+        name = newClient.name, 
+        email = newClient.email
+        )
 
 def editClient(id, newClient):
-    oldClient = Client.get_by_id(id)
+    try:
+        oldClient = Client.get_by_id(id)
+    except DoesNotExist:
+        return None
+    
     oldClient.name = newClient.name
     oldClient.email = newClient.email
     oldClient.save()
-    pass
 
-def getClient(id):
-    pass
+    return oldClient
 
-def deleteClient(id):
-    pass
+def getClient(id: int) -> Client | None:
+    try:
+        return Client.get_by_id(id)
+    except DoesNotExist:
+        return None
 
-obj = ClientData(name="editName", email="editEmail@gmail.com")
-editClient(1,obj)
+def deleteClient(id: int) -> bool:
+    try:
+        oldClient = Client.get_by_id(id)
+    except DoesNotExist:
+        return False
+    
+    oldClient.delete_instance()
+    return True
 
-listClient = Client.select()
-for c in listClient: 
-    print(c.name)
+def getAllClient() -> List[Client] | None:
+    try:
+        return List(Client.select())
+    except DoesNotExist:
+        return None
