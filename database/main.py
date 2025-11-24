@@ -15,7 +15,7 @@ def createClient(newClient: ClientData) -> Client:
         email = newClient.email
         )
 
-def editClient(id, newClient):
+def editClient(id: int, newClient: ClientData) -> Client | None:
     try:
         oldClient = Client.get_by_id(id)
     except DoesNotExist:
@@ -42,8 +42,8 @@ def deleteClient(id: int) -> bool:
     oldClient.delete_instance()
     return True
 
-def getAllClient() -> List[Client] | None:
+def getAllClient() -> list[Client] | None:
     try:
-        return List(Client.select())
+        return list(Client.select())
     except DoesNotExist:
         return None
