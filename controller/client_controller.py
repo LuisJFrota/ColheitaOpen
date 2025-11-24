@@ -4,9 +4,9 @@ from services.client_services import create_client, edit_client, delete_client, 
 
 from database.models.client import ClientData
 
-clientBluePrint = Blueprint('client', __name__)
+client_bp = Blueprint('client', __name__)
 
-@clientBluePrint.route('/list', methods=['GET'])
+@client_bp.route('/list', methods=['GET'])
 def getListClient():
     data = get_all_clients()
 
@@ -16,7 +16,7 @@ def getListClient():
     return jsonify(result)
     
 
-@clientBluePrint.route('/create', methods=['POST'])
+@client_bp.route('/create', methods=['POST'])
 def postCreateNewClient():
     body = request.get_json()
 
@@ -25,7 +25,7 @@ def postCreateNewClient():
     client = create_client(clientData)
     return client.name
 
-@clientBluePrint.route('/edit/<int:id>', methods=['PUT'])
+@client_bp.route('/edit/<int:id>', methods=['PUT'])
 def putEditClient(id):
     body = request.get_json()
 
@@ -34,7 +34,7 @@ def putEditClient(id):
     client = edit_client(id, clientData)
     return client.name
 
-@clientBluePrint.route('/delete/<int:id>', methods=['DELETE'])
+@client_bp.route('/delete/<int:id>', methods=['DELETE'])
 def deleteClientById(id):
     init_db()
     deleteResult = delete_client(id)
