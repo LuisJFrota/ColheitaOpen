@@ -8,10 +8,10 @@ from services.rent_services import (
 )
 from database.models.rent import RentData
 
-boardgame_bp = Blueprint('rent', __name__)
+rent_bp = Blueprint('rent', __name__)
 
 
-@boardgame_bp.route('/list', methods=['GET'])
+@rent_bp.route('/list', methods=['GET'])
 def get_list_rents():
     data = get_all_rents()
 
@@ -27,7 +27,7 @@ def get_list_rents():
     return jsonify(result)
 
 
-@boardgame_bp.route('/create', methods=['POST'])
+@rent_bp.route('/create', methods=['POST'])
 def post_create_rent():
     body = request.get_json()
 
@@ -48,7 +48,7 @@ def post_create_rent():
     })
 
 
-@boardgame_bp.route('/edit/<int:id>', methods=['PUT'])
+@rent_bp.route('/edit/<int:id>', methods=['PUT'])
 def put_edit_rent(id):
     body = request.get_json()
 
@@ -69,7 +69,7 @@ def put_edit_rent(id):
     })
 
 
-@boardgame_bp.route('/delete/<int:id>', methods=['DELETE'])
+@rent_bp.route('/delete/<int:id>', methods=['DELETE'])
 def delete_remove_rent(id):
     init_db()
     delete_result = delete_rent(id)
