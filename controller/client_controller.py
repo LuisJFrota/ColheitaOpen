@@ -1,13 +1,18 @@
 from flask import Blueprint, request, jsonify 
 from database.main import init_db
-from services.client_services import create_client, edit_client, delete_client, get_all_clients
+from services.client_services import (
+    create_client, 
+    edit_client, 
+    delete_client, 
+    get_all_clients
+)
 
 from database.models.client import ClientData
 
 client_bp = Blueprint('client', __name__)
 
 @client_bp.route('/list', methods=['GET'])
-def getListClient():
+def get_list_clients():
     data = get_all_clients()
 
     result : ClientData = []
@@ -17,7 +22,7 @@ def getListClient():
     
 
 @client_bp.route('/create', methods=['POST'])
-def postCreateNewClient():
+def post_create_client():
     body = request.get_json()
 
     clientData = ClientData(body['name'], body['email'])
@@ -26,7 +31,7 @@ def postCreateNewClient():
     return client.name
 
 @client_bp.route('/edit/<int:id>', methods=['PUT'])
-def putEditClient(id):
+def put_edit_client(id):
     body = request.get_json()
 
     clientData = ClientData(body['name'], body['email'])
@@ -35,7 +40,7 @@ def putEditClient(id):
     return client.name
 
 @client_bp.route('/delete/<int:id>', methods=['DELETE'])
-def deleteClientById(id):
+def delete_remove_client(id):
     init_db()
     deleteResult = delete_client(id)
     return jsonify({'deleted': deleteResult})

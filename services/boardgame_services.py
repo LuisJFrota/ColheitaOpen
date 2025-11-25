@@ -41,7 +41,7 @@ def delete_boardgame(id: int) -> bool:
     return True
 
 
-def getA_all_boardgames() -> list[BoardGame] | None:
+def get_all_boardgames() -> list[BoardGame] | None:
     try:
         return list(BoardGame.select())
     except DoesNotExist:
