@@ -1,7 +1,9 @@
 from peewee import *
 import datetime
+from dotenv import load_dotenv
+import os
 
-db = SqliteDatabase('exampledatabase.db')
+db = SqliteDatabase(os.getenv("DATABASE_NAME"))
 
 class BaseModel(Model):
     updatedAt = DateTimeField(default=datetime.datetime.now)
