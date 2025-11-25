@@ -116,6 +116,3 @@ python main.py
 Este projeto é livre para uso e modificação.
 
 ---
-
-Se quiser, posso **personalizar o README**, adicionar imagens, badges, instruções mais detalhadas ou exemplos de uso!
-
